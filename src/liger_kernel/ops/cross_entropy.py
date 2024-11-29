@@ -253,7 +253,7 @@ def cross_entropy_forward(
     else:
         z_loss_1d = loss_1d  # dummy ptr when return_z_loss == False
 
-    n_non_ignore = (target != ignore_index).sum().item()
+    n_non_ignore = (target != ignore_index).int().sum().item()
 
     # ensure _input and target are contiguous in the last dimension
     if _input.stride(-1) != 1:
