@@ -253,7 +253,9 @@ def cross_entropy_forward(
     else:
         z_loss_1d = loss_1d  # dummy ptr when return_z_loss == False
 
-    n_non_ignore = (target != ignore_index).int().sum().item()
+    # n_non_ignore = (target != ignore_index).int().sum().item()
+    mask = torch.ne(target, ignore_index)  # This creates a boolean tensor
+    n_non_ignore = torch.sum(mask.to(torch.int64)).item()
 
     # ensure _input and target are contiguous in the last dimension
     if _input.stride(-1) != 1:
